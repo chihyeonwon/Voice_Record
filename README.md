@@ -84,7 +84,65 @@
 ```
 녹음된 음성파일 이름 변수와, 녹음을 위한 MediaRecorder, 녹음 시작 여부 상태 변수를 선언한다.
 ```
- 
+```kotlin
+// 저장될 음성 파일 위치 지정
+        voiceFileName = "${externalCacheDir!!.absolutePath}/voice_record.3gp"
+
+        with(binding) {
+            // 음성 녹음 버튼이 클릭된 경우
+            RecordButton.setOnClickListener {
+                if (isRecordStart) {
+                    stopRecording()
+                } else {
+                    startRecording()
+                }
+                isRecordStart = !isRecordStart
+
+                RecordButton.text = when (isRecordStart) {
+                    true -> "음성 녹음 정지"
+                    false -> "음성 녹음 시작"
+                }
+            }
+        }
+```
+```
+녹음된 파일이 저장될 위치(절대경로)를 저장할 변수를 선언하고 값을 저장한다.
+
+녹음 버튼을 눌렀을 때 녹음 상태 여부를 확인하여 녹음중인 상태가 아닌 경우 (초기 변수값이 false) startRecording() 녹음 시작함수가 실행되고
+녹음중인 상태일 경우 녹음 중지함수가 실행된다. 그 이후 녹음 상태 여부를 true로 변경한다.
+```
+#### 녹음 시작
+```kotlin
+// 녹음 시작
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun startRecording() {
+        mediaRecorder = MediaRecorder(this).apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setOutputFile(voiceFileName)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+
+            try {
+                prepare()
+            } catch (e: IOException) {
+                android.util.Log.e("MainActivity", "prepare() failed")
+            }
+
+            start()
+        }
+    }
+```
+#### 녹음 중지
+```kotlin
+ // 녹음 중지
+    fun stopRecording() {
+        mediaRecorder?.apply {
+            stop()
+            release()
+        }
+        mediaRecorder = null
+    }
+```
 
 
 

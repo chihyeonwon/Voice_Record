@@ -1,5 +1,6 @@
 package com.wonchihyeon.voicerecord
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_RECORD_AUDIO_PERMISSION)
 
         // 저장될 음성 파일 위치 지정
-        voiceFileName = "${externalCacheDir!!.absolutePath}/voice_record.3gp"
+        voiceFileName = "${externalCacheDir?.absolutePath}/voice_record.3gp"
 
         with(binding) {
             // 음성 녹음 버튼이 클릭된 경우
@@ -75,7 +76,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 녹음 시작
-    @RequiresApi(Build.VERSION_CODES.S)
     fun startRecording() {
         mediaRecorder = MediaRecorder(this).apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)

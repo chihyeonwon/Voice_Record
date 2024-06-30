@@ -2,14 +2,17 @@ package com.wonchihyeon.voicerecord
 
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
+import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.wonchihyeon.voicerecord.databinding.ActivityMainBinding
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     // 음성 녹음 권한요청 코드
     val REQUEST_CODE_RECORD_AUDIO_PERMISSION = 200
@@ -28,7 +31,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // 음성 녹음 권한 Runtime에 권한 요청
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_RECORD_AUDIO_PERMISSION)
@@ -36,8 +40,23 @@ class MainActivity : AppCompatActivity() {
         // 저장될 음성 파일 위치 지정
         voiceFileName = "${externalCacheDir!!.absolutePath}/voice_record.3gp"
 
-    }
+        with(binding) {
+            // 음성 녹음 버튼이 클릭된 경우
+            RecordButton.setOnClickListener {
+                if (isRecordStart) {
+                    stopRecording()
+                } else {
+                    startRecording()
+                }
+                isRecordStart = !isRecordStart
 
+                RecordButton.text = when (isRecordStart) {
+                    true -> "음성 녹음 정지"
+                    false -> "음성 녹음 시작"
+                }
+            }
+        }
+    }
     // 권한 요청이 완료된 경우 호출되는 함수
     // 권한을 거절한 경우 종료
     override fun onRequestPermissionsResult(
@@ -53,5 +72,33 @@ class MainActivity : AppCompatActivity() {
             false
         }
         if (!permissionToRecordAccepted) finish()
+    }
+
+    // 녹음 시작
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun startRecording() {
+        mediaRecorder = MediaRecorder(this).apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setOutputFile(voiceFileName)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+
+            try {
+                prepare()
+            } catch (e: IOException) {
+                android.util.Log.e("MainActivity", "prepare() failed")
+            }
+
+            start()
+        }
+    }
+
+    // 녹음 중지
+    fun stopRecording() {
+        mediaRecorder?.apply {
+            stop()
+            release()
+        }
+        mediaRecorder = null
     }
 }

@@ -34,7 +34,7 @@
     // 앱에서 필요로 하는 권한 배열
     private var permissions: Array<String> = arrayOf(android.Manifest.permission.RECORD_AUDIO)
 ```
-#### 권한 요청
+#### 런타임 권한 요청
 ```kotlin
 // 음성 녹음 권한 Runtime에 권한 요청
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_RECORD_AUDIO_PERMISSION)

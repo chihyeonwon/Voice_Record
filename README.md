@@ -69,8 +69,22 @@
 #### 음성 녹음 권한 거부 시
 ![2024-06-30 17;10;10](https://github.com/chihyeonwon/Voice_Record/assets/58906858/1f57f3df-7a6f-4616-9cb6-0c6ecb67e46e)
 
-
-
+## 녹음 기능 구현
+#### 녹음 기능 관련 변수 선언
+```kotlin
+ // 녹음된 음성파일 이름
+    var voiceFileName: String = ""
+    
+    // 음성 녹음을 위한 MediaRecorder
+    var mediaRecorder: MediaRecorder? = null
+    
+    // 녹음이 시작되었는지 상태 변수
+    var isRecordStart = false
+```
+```
+녹음된 음성파일 이름 변수와, 녹음을 위한 MediaRecorder, 녹음 시작 여부 상태 변수를 선언한다.
+```
+ 
 
 
 

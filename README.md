@@ -86,7 +86,7 @@
 ```
 ```kotlin
 // 저장될 음성 파일 위치 지정
-        voiceFileName = "${externalCacheDir!!.absolutePath}/voice_record.3gp"
+        voiceFileName = "${externalCacheDir?.absolutePath}/voice_record.3gp"
 
         with(binding) {
             // 음성 녹음 버튼이 클릭된 경우
@@ -114,7 +114,6 @@
 #### 녹음 시작
 ```kotlin
 // 녹음 시작
-    @RequiresApi(Build.VERSION_CODES.S)
     fun startRecording() {
         mediaRecorder = MediaRecorder(this).apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)

@@ -63,3 +63,14 @@
 만약 권한 요청이 수락된 경우 (requestCode가 200인 경우) 결과에 권한 허가에 해당하는 값을 넣고
 권한 요청이 거부된 경우 앱을 종료한다.
 ```
+#### 음성 녹음 권한 수락 시 
+![2024-06-30 17;08;36](https://github.com/chihyeonwon/Voice_Record/assets/58906858/f76d4392-c605-4004-b45b-b657ef77ce0f)
+
+#### 음성 녹음 권한 거부 시
+![2024-06-30 17;10;10](https://github.com/chihyeonwon/Voice_Record/assets/58906858/1f57f3df-7a6f-4616-9cb6-0c6ecb67e46e)
+
+
+
+
+
+

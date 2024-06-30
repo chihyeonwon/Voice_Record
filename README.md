@@ -20,7 +20,7 @@
 음성 녹음에 대한 사용 권한과 카메라 기능(Feature)에 관한 권한 사용을 추가하였습니다.
 ```
 ## 레이아웃
-![image](https://github.com/chihyeonwon/Voice_Record/assets/58906858/2ad95596-ab84-4f85-826a-0cfe8c0e9419)
+![image](https://github.com/chihyeonwon/Voice_Record/assets/58906858/6439a6d7-ba39-454a-8562-db194952754b)
 ```
 레이아웃은 상단에 음성을 녹음하고 재생하는 버튼 두개와 바로 밑에 동영상 녹화하는 버튼을 주고
 동영상 녹화 버튼 아래에 녹화한 동영상을 재생할 수 있는 인터페이스를 줬다.

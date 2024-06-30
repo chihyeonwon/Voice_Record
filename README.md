@@ -25,3 +25,41 @@
 레이아웃은 상단에 음성을 녹음하고 재생하는 버튼 두개와 바로 밑에 동영상 녹화하는 버튼을 주고
 동영상 녹화 버튼 아래에 녹화한 동영상을 재생할 수 있는 인터페이스를 줬다.
 ```
+## 음성 녹음 권한 요청
+#### 권한 요청 코드 변수
+```kotlin
+// 음성 녹음 권한요청 코드
+    val REQUEST_CODE_RECORD_AUDIO_PERMISSION = 200
+
+    // 앱에서 필요로 하는 권한 배열
+    private var permissions: Array<String> = arrayOf(android.Manifest.permission.RECORD_AUDIO)
+```
+#### 권한 요청
+```kotlin
+// 음성 녹음 권한 Runtime에 권한 요청
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_RECORD_AUDIO_PERMISSION)
+```
+#### 권한 요청 수락/거절 로직
+```kotlin
+// 권한 요청이 완료된 경우 호출되는 함수
+    // 권한을 거절한 경우 종료
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        val permissionToRecordAccepted = if(requestCode == REQUEST_CODE_RECORD_AUDIO_PERMISSION) {
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        } else {
+            false
+        }
+        if (!permissionToRecordAccepted) finish()
+    }
+```
+```
+앱이 실행되면 음성 녹음에 대한 권한을 권한 코드 200으로 요청한다.
+만약 권한 요청이 수락된 경우 (requestCode가 200인 경우) 결과에 권한 허가에 해당하는 값을 넣고
+권한 요청이 거부된 경우 앱을 종료한다.
+```
